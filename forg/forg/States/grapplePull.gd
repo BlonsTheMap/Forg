@@ -18,6 +18,8 @@ func exit():
 	forg.fallSpeed = 0
 	var direction = Input.get_axis("Left", "Right")
 	
+	forg.velocity = forg.velocity.limit_length(pullSpeed)
+	
 	tongueSprite.visible = false
 	if Input.is_action_pressed("Roll"):
 		if forg.is_on_wall():
@@ -56,6 +58,9 @@ func physicsProcess():
 	forg.coyote = 1
 	
 	tongue.force_raycast_update()
-	if forg.get_slide_collision_count() or not tongue.is_colliding():
-		jump()
+	if forg.get_slide_collision_count():
+		bounce()
 		roll()
+	if not tongue.is_colliding():
+		roll()
+		jump()

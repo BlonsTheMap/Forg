@@ -14,6 +14,7 @@
 [ext_resource type="Script" uid="uid://cnul6sqdtoy05" path="res://forg/States/airRoll.gd" id="11_dg77c"]
 [ext_resource type="Script" uid="uid://dc2v0qwukwn26" path="res://forg/States/wallRoll.gd" id="12_ycdy4"]
 [ext_resource type="Script" uid="uid://6ubyfec73t7p" path="res://forg/States/ceilingRoll.gd" id="13_w48qg"]
+[ext_resource type="Script" uid="uid://bmhq734lkecqm" path="res://forg/States/bounce.gd" id="14_vivmo"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lquwl"]
 texture = ExtResource("1_lquwl")
@@ -99,6 +100,8 @@ metadata/_custom_type_script = "uid://4et37kaxibck"
 [node name="grapplePull" type="Node" parent="forg/stateMachine" unique_id=1998984558]
 script = ExtResource("10_efxa6")
 pullSpeed = 150
+grappleTime = 15
+jumpMultiplier = 0.5
 acceleration = 0
 friction = 0
 metadata/_custom_type_script = "uid://xsdgmq4kipi6"
@@ -108,7 +111,7 @@ script = ExtResource("10_dg77c")
 boost = 20
 jumpVelocity = -120
 acceleration = 5
-friction = 2
+friction = 3
 metadata/_custom_type_script = "uid://dc5pmx555wpgt"
 
 [node name="airRoll" type="Node" parent="forg/stateMachine" unique_id=2113373802]
@@ -129,6 +132,10 @@ script = ExtResource("13_w48qg")
 boost = 20
 friction = 2
 metadata/_custom_type_script = "uid://6ubyfec73t7p"
+
+[node name="bounce" type="Node" parent="forg/stateMachine" unique_id=157464592]
+script = ExtResource("14_vivmo")
+metadata/_custom_type_script = "uid://bmhq734lkecqm"
 
 [node name="Sprite2D" type="Sprite2D" parent="forg" unique_id=1651865295]
 texture = ExtResource("1_ig7tw")

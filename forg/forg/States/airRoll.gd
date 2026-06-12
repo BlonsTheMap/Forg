@@ -15,7 +15,7 @@ func physicsProcess():
 	grapple()
 	
 	if abs(forg.velocity.x) < minSpeed or Input.is_action_just_released("Roll"):
-		transition.emit(self, "grounded")
+		transition.emit(self, "fall")
 		return
 	if forg.is_on_floor() and forg.velocity.y > 0:
 		transition.emit(self, "groundRoll")

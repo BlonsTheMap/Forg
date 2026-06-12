@@ -4,6 +4,7 @@ class_name State
 signal transition
 
 @export var jumpVelocity := -1
+@export var bounceVelocity := -1
 @export var jumpMultiplier := -1.0
 @export var gravity := -1
 @export var highGravity := -1
@@ -34,6 +35,8 @@ func exit():
 func _ready() -> void:
 	if jumpVelocity == -1:
 		jumpVelocity = forg.jumpVelocity
+	if bounceVelocity == -1:
+		bounceVelocity = forg.bounceVelocity
 	if jumpMultiplier == -1:
 		jumpMultiplier = forg.jumpMultiplier
 	if gravity == -1:
@@ -119,6 +122,22 @@ func roll():
 			transition.emit(self, "ceilingRoll")
 			return
 		transition.emit(self, "airRoll")
+		return
+
+func bounce():
+	var reflectAxis := Vector2(0,0)
+	if forg.is_on_floor() or forg.is_on_ceiling():
+		reflectAxis.y = -1
+		reflectAxis.x = 1
+	if forg.is_on_wall():
+		reflectAxis.x = -1
+		reflectAxis.y = 1
+	if forg.jumpBuffer and reflectAxis:
+		forg.grappleDir *= reflectAxis
+		forg.velocity = forg.grappleDir * bounceVelocity
+		if forg.velocity.y == 0:
+			forg.velocity.y = -bounceVelocity/2
+		transition.emit(self, "bounce")
 		return
 
 func physicsProcess():

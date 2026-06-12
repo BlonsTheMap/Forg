@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 @export var jumpVelocity := -100
+@export var bounceVelocity := 200
 @export var jumpMultiplier := 1.0
 @export var gravity := 20
 @export var highGravity := 40
