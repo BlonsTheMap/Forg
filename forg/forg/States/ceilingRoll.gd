@@ -1,0 +1,38 @@
+extends State
+class_name Ceiling_Roll
+
+@export var minimumSpeed := 20
+var minSpeed := minimumSpeed
+@export var boost := 50
+var floorNormal : Vector2
+
+func enter():
+	minSpeed = minimumSpeed
+	var direction = Input.get_axis("Left", "Right")
+	if forg.touchingLeft or forg.velocity.x > 0:
+		direction = 1
+	if forg.touchingRight or forg.velocity.x < 0:
+		direction = -1
+	
+	forg.velocity.x += abs(forg.fallSpeed)/3 * direction
+
+func exit():
+	pass
+
+func physicsProcess():
+	forg.velocity.x = move_toward(forg.velocity.x, 0, friction)
+	forg.velocity.y = -holdStrength
+	grapple()
+	
+	minSpeed += 5
+	
+	if abs(forg.velocity.x) < minSpeed or Input.is_action_just_released("Roll"):
+		transition.emit(self, "fall")
+		return
+	if (forg.touchingRight and forg.velocity.x > 0) or (forg.touchingLeft and forg.velocity.x < 0):
+		forg.velocity.y = 0
+		transition.emit(self, "wallRoll")
+		return
+	if not forg.is_on_ceiling():
+		transition.emit(self, "airRoll")
+		return

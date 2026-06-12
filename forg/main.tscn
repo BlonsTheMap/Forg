@@ -1,0 +1,163 @@
+[gd_scene format=4 uid="uid://inysywyr7mh0"]
+
+[ext_resource type="Script" uid="uid://dsa6yftqaj87r" path="res://forg/forg.gd" id="1_0xm2m"]
+[ext_resource type="Texture2D" uid="uid://cw4ryvw1vxgt2" path="res://forg/forg.png" id="1_ig7tw"]
+[ext_resource type="Texture2D" uid="uid://brscac3n6uk3k" path="res://tiles.png" id="1_lquwl"]
+[ext_resource type="Script" uid="uid://b7agf608bxs0q" path="res://forg/States/stateMachine.gd" id="2_h2yge"]
+[ext_resource type="Script" uid="uid://dp2vcqw8bon1h" path="res://forg/States/grounded.gd" id="3_1bvp3"]
+[ext_resource type="Script" uid="uid://yvu1wvtpffb0" path="res://forg/States/fall.gd" id="5_272bh"]
+[ext_resource type="Script" uid="uid://dpvhh70xnseo6" path="res://forg/States/jump.gd" id="6_5vw27"]
+[ext_resource type="Texture2D" uid="uid://ow5bw22lomop" path="res://forg/tongue.png" id="8_5vw27"]
+[ext_resource type="Script" uid="uid://4et37kaxibck" path="res://forg/States/grappling.gd" id="9_4c57u"]
+[ext_resource type="Script" uid="uid://dc5pmx555wpgt" path="res://forg/States/groundRoll.gd" id="10_dg77c"]
+[ext_resource type="Script" uid="uid://xsdgmq4kipi6" path="res://forg/States/grapplePull.gd" id="10_efxa6"]
+[ext_resource type="Script" uid="uid://cnul6sqdtoy05" path="res://forg/States/airRoll.gd" id="11_dg77c"]
+[ext_resource type="Script" uid="uid://dc2v0qwukwn26" path="res://forg/States/wallRoll.gd" id="12_ycdy4"]
+[ext_resource type="Script" uid="uid://6ubyfec73t7p" path="res://forg/States/ceilingRoll.gd" id="13_w48qg"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lquwl"]
+texture = ExtResource("1_lquwl")
+texture_region_size = Vector2i(8, 8)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(4, -4, 4, 4, -4, 4)
+0:1/0 = 0
+0:1/0/physics_layer_2/polygon_0/points = PackedVector2Array(-4, 2, 4, 2, 4, 4, -4, 4)
+1:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_272bh"]
+tile_size = Vector2i(8, 8)
+uv_clipping = true
+physics_layer_0/collision_layer = 6
+physics_layer_0/collision_mask = 6
+physics_layer_1/collision_layer = 2
+physics_layer_1/collision_mask = 2
+physics_layer_2/collision_layer = 8
+physics_layer_2/collision_mask = 8
+sources/2 = SubResource("TileSetAtlasSource_lquwl")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_272bh"]
+radius = 4.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4c57u"]
+size = Vector2(2, 6)
+
+[node name="main" type="Node2D" unique_id=368022819]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=395975944]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1487102222]
+tile_map_data = PackedByteArray("AADw/wgAAgAAAAAAAADx/wgAAgAAAAAAAADy/wgAAgAAAAAAAADz/wgAAgAAAAAAAAD0/wgAAgAAAAAAAAD1/wgAAgAAAAAAAAD2/wgAAgAAAAAAAAD3/wgAAgAAAAAAAAD4/wgAAgAAAAAAAAD5/wgAAgAAAAAAAAD6/wgAAgAAAAAAAAD7/wgAAgAAAAAAAAD8/wgAAgAAAAAAAAD9/wgAAgAAAAAAAAD+/wgAAgAAAAAAAAD//wgAAgAAAAAAAAAAAAgAAgAAAAAAAAABAAgAAgAAAAAAAAACAAgAAgAAAAAAAAADAAgAAgAAAAAAAAAEAAgAAgAAAAAAAAAFAAgAAgAAAAAAAAAGAAgAAgAAAAAAAAAHAAgAAgAAAAAAAAAIAAgAAgAAAAAAAAAJAAgAAgAAAAAAAAAKAAgAAgAAAAAAAAALAAgAAgAAAAAAAAAMAAgAAgAAAAAAAAAPAAEAAgAAAAAAAAAPAAAAAgAAAAAAAAAPAP//AgAAAAAAAAAPAP7/AgAAAAAAAAAPAP3/AgAAAAAAAAAPAPz/AgAAAAAAAAAPAPv/AgAAAAAAAAAPAPr/AgAAAAAAAAAPAPn/AgAAAAAAAAAPAPj/AgAAAAAAAAAPAPf/AgAAAAAAAADw/wcAAgAAAAAAAADw/wYAAgAAAAAAAADw/wUAAgAAAAAAAADw/wQAAgAAAAAAAADw/wMAAgAAAAAAAADw/wIAAgAAAAAAAADw/wEAAgAAAAAAAADw/wAAAgAAAAAAAADw////AgAAAAAAAADw//7/AgAAAAAAAADw//3/AgAAAAAAAADw//z/AgAAAAAAAADw//v/AgAAAAAAAADw//r/AgAAAAAAAADw//n/AgAAAAAAAADw//j/AgAAAAAAAADw//f/AgAAAAAAAAAPAAIAAgAAAAAAAAAEAP7/AgAAAAAAAAAFAP7/AgAAAAAAAAAGAP7/AgAAAAAAAAAHAP7/AgAAAAAAAAAIAP7/AgAAAAAAAAAJAP7/AgAAAAAAAAAKAP7/AgAAAAAAAAALAP7/AgAAAAAAAAAMAP7/AgAAAAAAAAANAP7/AgAAAAAAAAAOAP7/AgAAAAAAAAANAAgAAgAAAAAAAAAOAAgAAgAAAAAAAAAPAAgAAgAAAAAAAAAPAAMAAgAAAAAAAAAGAP//AgAAAAAAAAAHAP//AgAAAAAAAAAIAAAAAgAAAAAAAAAJAAAAAgAAAAAAAAAKAAEAAgAAAAAAAAALAAEAAgAAAAAAAAAMAAIAAgAAAAAAAAANAAIAAgAAAAAAAAAOAAMAAgAAAAAAAAAQAAMAAgAAAAAAAAAQAAQAAgAAAAAAAAAQAAUAAgAAAAAAAAAQAAYAAgAAAAAAAAAQAAcAAgAAAAAAAAAQAAgAAgAAAAAAAAA=")
+tile_set = SubResource("TileSet_272bh")
+occlusion_enabled = false
+navigation_enabled = false
+
+[node name="tongueSprite" type="Sprite2D" parent="." unique_id=1539426106]
+texture = ExtResource("8_5vw27")
+
+[node name="forg" type="CharacterBody2D" parent="." unique_id=643459282]
+position = Vector2(-8, 0)
+collision_mask = 2
+slide_on_ceiling = false
+floor_constant_speed = true
+script = ExtResource("1_0xm2m")
+jumpVelocity = -170
+jumpMultiplier = 1.2
+gravity = 10
+highGravity = 25
+maxFallSpeed = 200
+walljumpVelocityY = -150
+walljumpVelocityX = 100
+maxSpeed = 80
+holdStrength = 100
+
+[node name="stateMachine" type="Node" parent="forg" unique_id=816900489 node_paths=PackedStringArray("initialState")]
+script = ExtResource("2_h2yge")
+initialState = NodePath("fall")
+
+[node name="grounded" type="Node" parent="forg/stateMachine" unique_id=2034913924]
+script = ExtResource("3_1bvp3")
+metadata/_custom_type_script = "uid://dp2vcqw8bon1h"
+
+[node name="fall" type="Node" parent="forg/stateMachine" unique_id=2033235537]
+script = ExtResource("5_272bh")
+acceleration = 15
+friction = 5
+metadata/_custom_type_script = "uid://yvu1wvtpffb0"
+
+[node name="jump" type="Node" parent="forg/stateMachine" unique_id=1004462670]
+script = ExtResource("6_5vw27")
+acceleration = 10
+friction = 5
+metadata/_custom_type_script = "uid://dpvhh70xnseo6"
+
+[node name="grappling" type="Node" parent="forg/stateMachine" unique_id=2030491904]
+script = ExtResource("9_4c57u")
+metadata/_custom_type_script = "uid://4et37kaxibck"
+
+[node name="grapplePull" type="Node" parent="forg/stateMachine" unique_id=1998984558]
+script = ExtResource("10_efxa6")
+pullSpeed = 150
+acceleration = 0
+friction = 0
+metadata/_custom_type_script = "uid://xsdgmq4kipi6"
+
+[node name="groundRoll" type="Node" parent="forg/stateMachine" unique_id=808993580]
+script = ExtResource("10_dg77c")
+boost = 20
+jumpVelocity = -120
+acceleration = 5
+friction = 2
+metadata/_custom_type_script = "uid://dc5pmx555wpgt"
+
+[node name="airRoll" type="Node" parent="forg/stateMachine" unique_id=2113373802]
+script = ExtResource("11_dg77c")
+minSpeed = 0
+friction = 1
+metadata/_custom_type_script = "uid://cnul6sqdtoy05"
+
+[node name="wallRoll" type="Node" parent="forg/stateMachine" unique_id=2115418997]
+script = ExtResource("12_ycdy4")
+minSpeed = 0
+boost = 20
+gravity = 5
+metadata/_custom_type_script = "uid://dc2v0qwukwn26"
+
+[node name="ceilingRoll" type="Node" parent="forg/stateMachine" unique_id=1295171029]
+script = ExtResource("13_w48qg")
+boost = 20
+friction = 2
+metadata/_custom_type_script = "uid://6ubyfec73t7p"
+
+[node name="Sprite2D" type="Sprite2D" parent="forg" unique_id=1651865295]
+texture = ExtResource("1_ig7tw")
+
+[node name="collider" type="CollisionShape2D" parent="forg" unique_id=1602418895]
+shape = SubResource("CircleShape2D_272bh")
+
+[node name="tongue" type="RayCast2D" parent="forg" unique_id=1969108277]
+enabled = false
+target_position = Vector2(0, 0)
+collision_mask = 4
+
+[node name="leftArea" type="Area2D" parent="forg" unique_id=411618599]
+position = Vector2(-4, 0)
+collision_layer = 2
+collision_mask = 2
+
+[node name="collisionShape2d" type="CollisionShape2D" parent="forg/leftArea" unique_id=1529372597]
+shape = SubResource("RectangleShape2D_4c57u")
+
+[node name="rightArea" type="Area2D" parent="forg" unique_id=481976306]
+position = Vector2(4, 0)
+collision_layer = 2
+collision_mask = 2
+
+[node name="collisionShape2d" type="CollisionShape2D" parent="forg/rightArea" unique_id=1647243045]
+shape = SubResource("RectangleShape2D_4c57u")
+
+[connection signal="body_entered" from="forg/leftArea" to="forg" method="_on_left_area_body_entered"]
+[connection signal="body_exited" from="forg/leftArea" to="forg" method="_on_left_area_body_exited"]
+[connection signal="body_entered" from="forg/rightArea" to="forg" method="_on_right_area_body_entered"]
+[connection signal="body_exited" from="forg/rightArea" to="forg" method="_on_right_area_body_exited"]
