@@ -40,5 +40,9 @@ func physicsProcess():
 	if not forg.is_on_wall():
 		transition.emit(self, "airRoll")
 		forg.velocity.x = abs(forg.velocity.y) * wallDirection
-		forg.velocity.y *= -1
+		if forg.velocity.y > 0:
+			forg.velocity.y = -holdStrength
+		else:
+			forg.velocity.y = holdStrength
+			forg.position.y -= 4
 		return

@@ -8,13 +8,7 @@ var floorNormal : Vector2
 
 func enter():
 	minSpeed = minimumSpeed
-	var direction = Input.get_axis("Left", "Right")
-	if forg.touchingLeft or forg.velocity.x > 0:
-		direction = 1
-	if forg.touchingRight or forg.velocity.x < 0:
-		direction = -1
-	
-	forg.velocity.x += abs(forg.fallSpeed)/3 * direction
+	forg.velocity.y = -holdStrength
 
 func exit():
 	pass
