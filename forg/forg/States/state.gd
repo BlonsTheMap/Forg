@@ -67,10 +67,8 @@ func run():
 		forg.velocity.x = move_toward(forg.velocity.x, 0, friction)
 
 func jump():
-	var direction = Input.get_axis("Left", "Right")
 	if forg.coyote > 0 and forg.jumpBuffer:
 		forg.velocity.y = jumpVelocity
-		forg.velocity.x = move_toward(forg.velocity.x, maxSpeed * direction, friction)
 		forg.jumpBuffer = false
 		if Input.is_action_pressed("Roll"):
 			transition.emit(self, "airRoll")
@@ -132,12 +130,13 @@ func bounce():
 	if forg.is_on_wall():
 		reflectAxis.x = -1
 		reflectAxis.y = 1
-	if forg.jumpBuffer and reflectAxis:
+	if Input.is_action_pressed("Jump") and reflectAxis:
 		forg.grappleDir *= reflectAxis
 		forg.velocity = forg.grappleDir * bounceVelocity
 		if forg.velocity.y == 0:
-			forg.velocity.y = -bounceVelocity/2
+			forg.velocity.y = -bounceVelocity * 0.7
 		transition.emit(self, "bounce")
+		forg.jumpBuffer = false
 		return
 
 func physicsProcess():

@@ -15,8 +15,13 @@
 [ext_resource type="Script" uid="uid://diuu8ne204dkp" path="res://forg/States/dead.gd" id="13_lfy3n"]
 [ext_resource type="Texture2D" uid="uid://cw4ryvw1vxgt2" path="res://forg/forg.png" id="14_3jpgv"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_272bh"]
-radius = 4.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vinxw"]
+radius = 2.0
+height = 6.0
+
+[sub_resource type="SeparationRayShape2D" id="SeparationRayShape2D_kw1xq"]
+length = 4.0
+slide_on_slope = true
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4c57u"]
 size = Vector2(2, 6)
@@ -31,10 +36,9 @@ floor_constant_speed = true
 script = ExtResource("1_vinxw")
 jumpVelocity = -170
 bounceVelocity = 250
-jumpMultiplier = 1.2
 gravity = 10
 highGravity = 25
-maxFallSpeed = 200
+maxFallSpeed = 170
 walljumpVelocityY = -150
 walljumpVelocityX = 70
 maxSpeed = 80
@@ -67,7 +71,7 @@ metadata/_custom_type_script = "uid://4et37kaxibck"
 [node name="grapplePull" type="Node" parent="stateMachine" unique_id=177140626]
 script = ExtResource("7_x4l2g")
 pullSpeed = 150
-grappleTime = 15
+jumpVelocity = -200
 jumpMultiplier = 0.5
 acceleration = 0
 friction = 0
@@ -114,7 +118,26 @@ metadata/_custom_type_script = "uid://diuu8ne204dkp"
 texture = ExtResource("14_3jpgv")
 
 [node name="collider" type="CollisionShape2D" parent="." unique_id=1717255838]
-shape = SubResource("CircleShape2D_272bh")
+position = Vector2(0, -1)
+shape = SubResource("CapsuleShape2D_vinxw")
+
+[node name="downRay1" type="CollisionShape2D" parent="." unique_id=527800148]
+position = Vector2(-4, 0)
+shape = SubResource("SeparationRayShape2D_kw1xq")
+
+[node name="downRay2" type="CollisionShape2D" parent="." unique_id=1362113746]
+position = Vector2(4, 0)
+shape = SubResource("SeparationRayShape2D_kw1xq")
+
+[node name="sideRay1" type="CollisionShape2D" parent="." unique_id=773935604]
+position = Vector2(0, -3)
+rotation = 1.5707964
+shape = SubResource("SeparationRayShape2D_kw1xq")
+
+[node name="sideRay2" type="CollisionShape2D" parent="." unique_id=787625378]
+position = Vector2(0, -3)
+rotation = 4.712389
+shape = SubResource("SeparationRayShape2D_kw1xq")
 
 [node name="tongue" type="RayCast2D" parent="." unique_id=1201610525]
 enabled = false
