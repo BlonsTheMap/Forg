@@ -4,6 +4,7 @@ class_name Wall_Roll
 @export var minSpeed := 20
 @export var boost := 50
 var floorNormal : Vector2
+var wallDirection := 0
 
 func enter():
 	if not forg.justPulled:
@@ -19,8 +20,10 @@ func physicsProcess():
 	forg.velocity.y += gravity
 	
 	if forg.touchingRight:
+		wallDirection = 1
 		forg.velocity.x = holdStrength
 	if forg.touchingLeft:
+		wallDirection = -1
 		forg.velocity.x = -holdStrength
 	walljump()
 	grapple()
@@ -36,4 +39,6 @@ func physicsProcess():
 		transition.emit(self, "ceilingRoll")
 	if not forg.is_on_wall():
 		transition.emit(self, "airRoll")
+		forg.velocity.x = abs(forg.velocity.y) * wallDirection
+		forg.velocity.y *= -1
 		return

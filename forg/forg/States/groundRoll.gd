@@ -33,4 +33,6 @@ func physicsProcess():
 		return
 	if not forg.is_on_floor():
 		transition.emit(self, "airRoll")
+		forg.velocity.y = abs(forg.velocity.x)
+		forg.velocity.x *= -0.5
 		return

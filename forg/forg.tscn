@@ -1,0 +1,151 @@
+[gd_scene format=3 uid="uid://3eydd0vjy15a"]
+
+[ext_resource type="Script" uid="uid://dsa6yftqaj87r" path="res://forg/forg.gd" id="1_vinxw"]
+[ext_resource type="Script" uid="uid://b7agf608bxs0q" path="res://forg/States/stateMachine.gd" id="2_kw1xq"]
+[ext_resource type="Script" uid="uid://dp2vcqw8bon1h" path="res://forg/States/grounded.gd" id="3_ci1v4"]
+[ext_resource type="Script" uid="uid://yvu1wvtpffb0" path="res://forg/States/fall.gd" id="4_yfl0t"]
+[ext_resource type="Script" uid="uid://dpvhh70xnseo6" path="res://forg/States/jump.gd" id="5_s3ns7"]
+[ext_resource type="Script" uid="uid://4et37kaxibck" path="res://forg/States/grappling.gd" id="6_jwdmc"]
+[ext_resource type="Script" uid="uid://xsdgmq4kipi6" path="res://forg/States/grapplePull.gd" id="7_x4l2g"]
+[ext_resource type="Script" uid="uid://dc5pmx555wpgt" path="res://forg/States/groundRoll.gd" id="8_fo786"]
+[ext_resource type="Script" uid="uid://cnul6sqdtoy05" path="res://forg/States/airRoll.gd" id="9_adsqx"]
+[ext_resource type="Script" uid="uid://dc2v0qwukwn26" path="res://forg/States/wallRoll.gd" id="10_cloxt"]
+[ext_resource type="Script" uid="uid://6ubyfec73t7p" path="res://forg/States/ceilingRoll.gd" id="11_gx4vw"]
+[ext_resource type="Script" uid="uid://bmhq734lkecqm" path="res://forg/States/bounce.gd" id="12_s34ut"]
+[ext_resource type="Script" uid="uid://diuu8ne204dkp" path="res://forg/States/dead.gd" id="13_lfy3n"]
+[ext_resource type="Texture2D" uid="uid://cw4ryvw1vxgt2" path="res://forg/forg.png" id="14_3jpgv"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_272bh"]
+radius = 4.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4c57u"]
+size = Vector2(2, 6)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2cqfq"]
+radius = 3.0
+
+[node name="forg" type="CharacterBody2D" unique_id=1249220461]
+collision_mask = 2
+slide_on_ceiling = false
+floor_constant_speed = true
+script = ExtResource("1_vinxw")
+jumpVelocity = -170
+bounceVelocity = 250
+jumpMultiplier = 1.2
+gravity = 10
+highGravity = 25
+maxFallSpeed = 200
+walljumpVelocityY = -150
+walljumpVelocityX = 70
+maxSpeed = 80
+holdStrength = 100
+
+[node name="stateMachine" type="Node" parent="." unique_id=2144673202 node_paths=PackedStringArray("initialState")]
+script = ExtResource("2_kw1xq")
+initialState = NodePath("fall")
+
+[node name="grounded" type="Node" parent="stateMachine" unique_id=167028265]
+script = ExtResource("3_ci1v4")
+metadata/_custom_type_script = "uid://dp2vcqw8bon1h"
+
+[node name="fall" type="Node" parent="stateMachine" unique_id=2101926124]
+script = ExtResource("4_yfl0t")
+acceleration = 15
+friction = 5
+metadata/_custom_type_script = "uid://yvu1wvtpffb0"
+
+[node name="jump" type="Node" parent="stateMachine" unique_id=1423987560]
+script = ExtResource("5_s3ns7")
+acceleration = 10
+friction = 5
+metadata/_custom_type_script = "uid://dpvhh70xnseo6"
+
+[node name="grappling" type="Node" parent="stateMachine" unique_id=52253083]
+script = ExtResource("6_jwdmc")
+metadata/_custom_type_script = "uid://4et37kaxibck"
+
+[node name="grapplePull" type="Node" parent="stateMachine" unique_id=177140626]
+script = ExtResource("7_x4l2g")
+pullSpeed = 150
+grappleTime = 15
+jumpMultiplier = 0.5
+acceleration = 0
+friction = 0
+metadata/_custom_type_script = "uid://xsdgmq4kipi6"
+
+[node name="groundRoll" type="Node" parent="stateMachine" unique_id=521354801]
+script = ExtResource("8_fo786")
+boost = 20
+jumpVelocity = -120
+acceleration = 5
+friction = 3
+holdStrength = 50
+metadata/_custom_type_script = "uid://dc5pmx555wpgt"
+
+[node name="airRoll" type="Node" parent="stateMachine" unique_id=2014337166]
+script = ExtResource("9_adsqx")
+minSpeed = 0
+friction = 1
+metadata/_custom_type_script = "uid://cnul6sqdtoy05"
+
+[node name="wallRoll" type="Node" parent="stateMachine" unique_id=1500080470]
+script = ExtResource("10_cloxt")
+minSpeed = 0
+boost = 20
+gravity = 5
+metadata/_custom_type_script = "uid://dc2v0qwukwn26"
+
+[node name="ceilingRoll" type="Node" parent="stateMachine" unique_id=1467583762]
+script = ExtResource("11_gx4vw")
+minimumSpeed = 0
+boost = 20
+friction = 2
+metadata/_custom_type_script = "uid://6ubyfec73t7p"
+
+[node name="bounce" type="Node" parent="stateMachine" unique_id=201652998]
+script = ExtResource("12_s34ut")
+metadata/_custom_type_script = "uid://bmhq734lkecqm"
+
+[node name="dead" type="Node" parent="stateMachine" unique_id=1211754294]
+script = ExtResource("13_lfy3n")
+metadata/_custom_type_script = "uid://diuu8ne204dkp"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1432282050]
+texture = ExtResource("14_3jpgv")
+
+[node name="collider" type="CollisionShape2D" parent="." unique_id=1717255838]
+shape = SubResource("CircleShape2D_272bh")
+
+[node name="tongue" type="RayCast2D" parent="." unique_id=1201610525]
+enabled = false
+target_position = Vector2(0, 0)
+collision_mask = 4
+
+[node name="leftArea" type="Area2D" parent="." unique_id=1349717517]
+position = Vector2(-4, 0)
+collision_layer = 2
+collision_mask = 2
+
+[node name="collisionShape2d" type="CollisionShape2D" parent="leftArea" unique_id=1319429063]
+shape = SubResource("RectangleShape2D_4c57u")
+
+[node name="rightArea" type="Area2D" parent="." unique_id=849316060]
+position = Vector2(4, 0)
+collision_layer = 2
+collision_mask = 2
+
+[node name="collisionShape2d" type="CollisionShape2D" parent="rightArea" unique_id=1867576808]
+shape = SubResource("RectangleShape2D_4c57u")
+
+[node name="hitbox" type="Area2D" parent="." unique_id=132557834]
+collision_layer = 0
+collision_mask = 8
+
+[node name="collisionShape2d" type="CollisionShape2D" parent="hitbox" unique_id=679523076]
+shape = SubResource("CircleShape2D_2cqfq")
+
+[connection signal="body_entered" from="leftArea" to="." method="_on_left_area_body_entered"]
+[connection signal="body_exited" from="leftArea" to="." method="_on_left_area_body_exited"]
+[connection signal="body_entered" from="rightArea" to="." method="_on_right_area_body_entered"]
+[connection signal="body_exited" from="rightArea" to="." method="_on_right_area_body_exited"]
+[connection signal="body_shape_entered" from="hitbox" to="." method="_on_hitbox_body_shape_entered"]

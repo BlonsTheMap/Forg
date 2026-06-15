@@ -17,17 +17,23 @@ func exit():
 	forg.justPulled = true
 	forg.fallSpeed = 0
 	var direction = Input.get_axis("Left", "Right")
+	var directionY = Input.get_axis("Up", "Down")
 	
 	forg.velocity = forg.velocity.limit_length(pullSpeed)
 	
 	tongueSprite.visible = false
 	if Input.is_action_pressed("Roll"):
 		if forg.is_on_wall():
-			forg.velocity.y = -pullSpeed * .9
 			if forg.grappleDir.y > 0:
 				forg.velocity.y = pullSpeed
+				return
 			if forg.grappleDir.y < 0:
 				forg.velocity.y = -pullSpeed
+				return
+			if directionY != 0:
+				forg.velocity.y = pullSpeed * directionY
+				return
+			forg.velocity.y = -pullSpeed
 			return
 		if forg.is_on_floor() or forg.is_on_ceiling():
 			forg.velocity.x = pullSpeed * direction

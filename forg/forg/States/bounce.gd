@@ -15,3 +15,5 @@ func physicsProcess():
 	bounceTimer -= 1
 	if bounceTimer == 0:
 		transition.emit(self, "fall")
+	if forg.get_slide_collision_count():
+		roll()

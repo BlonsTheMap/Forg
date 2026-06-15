@@ -19,7 +19,7 @@ func physicsProcess():
 		return
 	if forg.is_on_floor() and forg.velocity.y > 0:
 		transition.emit(self, "groundRoll")
-	if forg.is_on_ceiling() and forg.velocity.y < 0:
+	if forg.is_on_ceiling():
 		transition.emit(self, "ceilingRoll")
 	if forg.is_on_wall():
 		transition.emit(self, "wallRoll")
