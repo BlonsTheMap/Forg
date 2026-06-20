@@ -1,0 +1,5 @@
+res://forg.tscn
+res://tileset.tres
+res://forg/States/wallRoll.gd
+res://forg/States/groundRoll.gd
+res://forg/States/ceilingRoll.gd

@@ -24,7 +24,7 @@ length = 4.0
 slide_on_slope = true
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4c57u"]
-size = Vector2(2, 6)
+size = Vector2(2, 8)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2cqfq"]
 radius = 3.0
@@ -34,13 +34,15 @@ collision_mask = 2
 slide_on_ceiling = false
 floor_constant_speed = true
 script = ExtResource("1_vinxw")
-jumpVelocity = -170
+jumpVelocity = -150
 bounceVelocity = 250
-gravity = 10
-highGravity = 25
+gravity = 9
+highGravity = 15
 maxFallSpeed = 170
-walljumpVelocityY = -150
-walljumpVelocityX = 70
+walljumpVelocityY = -140
+walljumpVelocityX = 90
+acceleration = 15
+friction = 15
 maxSpeed = 80
 holdStrength = 100
 
@@ -54,14 +56,15 @@ metadata/_custom_type_script = "uid://dp2vcqw8bon1h"
 
 [node name="fall" type="Node" parent="stateMachine" unique_id=2101926124]
 script = ExtResource("4_yfl0t")
-acceleration = 15
-friction = 5
+acceleration = 10
+friction = 4
 metadata/_custom_type_script = "uid://yvu1wvtpffb0"
 
 [node name="jump" type="Node" parent="stateMachine" unique_id=1423987560]
 script = ExtResource("5_s3ns7")
+gravity = 7
 acceleration = 10
-friction = 5
+friction = 4
 metadata/_custom_type_script = "uid://dpvhh70xnseo6"
 
 [node name="grappling" type="Node" parent="stateMachine" unique_id=52253083]
@@ -79,10 +82,9 @@ metadata/_custom_type_script = "uid://xsdgmq4kipi6"
 
 [node name="groundRoll" type="Node" parent="stateMachine" unique_id=521354801]
 script = ExtResource("8_fo786")
-boost = 20
 jumpVelocity = -120
-acceleration = 5
-friction = 3
+acceleration = 10
+friction = 5
 holdStrength = 50
 metadata/_custom_type_script = "uid://dc5pmx555wpgt"
 
@@ -94,14 +96,13 @@ metadata/_custom_type_script = "uid://cnul6sqdtoy05"
 
 [node name="wallRoll" type="Node" parent="stateMachine" unique_id=1500080470]
 script = ExtResource("10_cloxt")
-minSpeed = 0
 boost = 20
 gravity = 5
 metadata/_custom_type_script = "uid://dc2v0qwukwn26"
 
 [node name="ceilingRoll" type="Node" parent="stateMachine" unique_id=1467583762]
 script = ExtResource("11_gx4vw")
-minimumSpeed = 0
+minimumSpeed = 40
 boost = 20
 friction = 2
 metadata/_custom_type_script = "uid://6ubyfec73t7p"

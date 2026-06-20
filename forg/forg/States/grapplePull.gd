@@ -60,6 +60,7 @@ func physicsProcess():
 	
 	if Input.is_action_just_pressed("Grapple"):
 		transition.emit(self, "fall")
+		return
 	
 	forg.coyote = 1
 	

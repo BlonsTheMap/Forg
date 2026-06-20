@@ -9,6 +9,13 @@ var floorNormal : Vector2
 func enter():
 	minSpeed = minimumSpeed
 	forg.velocity.y = -holdStrength
+	var direction : int
+	if forg.touchingLeft:
+		direction = 1
+	if forg.touchingRight:
+		direction = -1
+	
+	forg.velocity.x += abs(forg.velocity.y) * direction
 
 func exit():
 	pass
@@ -29,5 +36,17 @@ func physicsProcess():
 	if not forg.is_on_ceiling():
 		transition.emit(self, "airRoll")
 		forg.velocity.y = -abs(forg.velocity.x)
-		forg.velocity.x *= -0.5
+		tongue.position = Vector2(0,-4)
+		if forg.velocity.x > 0:
+			forg.velocity.x = -1
+			tongue.target_position = Vector2(-16,0)
+			tongue.force_raycast_update()
+			if tongue.is_colliding():
+				forg.position = Vector2(tongue.get_collision_point().x + 4, tongue.get_collision_point().y)
+		else:
+			forg.velocity.x = 1
+			tongue.target_position = Vector2(16,0)
+			tongue.force_raycast_update()
+			if tongue.is_colliding():
+				forg.position = Vector2(tongue.get_collision_point().x - 4, tongue.get_collision_point().y)
 		return

@@ -110,14 +110,14 @@ func grapple():
 func roll():
 	if forg.rollBuffer:
 		forg.rollBuffer = false
+		if forg.is_on_ceiling():
+			transition.emit(self, "ceilingRoll")
+			return
 		if forg.is_on_wall():
 			transition.emit(self, "wallRoll")
 			return
 		if forg.is_on_floor():
 			transition.emit(self, "groundRoll")
-			return
-		if forg.is_on_ceiling():
-			transition.emit(self, "ceilingRoll")
 			return
 		transition.emit(self, "airRoll")
 		return

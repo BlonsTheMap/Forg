@@ -9,7 +9,7 @@ func exit():
 
 func physicsProcess():
 	if Input.is_action_pressed("Jump"):
-		forg.velocity.y += gravity
+		forg.velocity.y = move_toward(forg.velocity.y, 0, gravity)
 	else:
 		forg.velocity.y += highGravity
 	run()
@@ -20,6 +20,6 @@ func physicsProcess():
 	if forg.is_on_floor():
 		transition.emit(self, "grounded")
 		return
-	if forg.velocity.y > 0:
+	if forg.velocity.y >= 0:
 		transition.emit(self, "fall")
 		return
